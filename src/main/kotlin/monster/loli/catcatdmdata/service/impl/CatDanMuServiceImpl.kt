@@ -5,6 +5,7 @@ import monster.loli.catcatdmdata.repository.CatDanMuRepository
 import monster.loli.catcatdmdata.service.CatDanMuService
 import org.springframework.beans.BeanUtils
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Pageable
 import org.springframework.data.mongodb.core.MongoTemplate
@@ -18,10 +19,10 @@ class CatDanMuServiceImpl: CatDanMuService {
     lateinit var catDanMuRepository: CatDanMuRepository
     @Autowired
     lateinit var mongoTemplate: MongoTemplate
-    override fun listDanMu(clientId: String, roomId: Long): ArrayList<LinkedHashMap<String, Any>> {
+    override fun listDanMu(clientId: String, roomId: Long): Page<CatDanMu?>? {
         var s =  ArrayList<LinkedHashMap<String, Any>>();
         val findList = catDanMuRepository.findAll(PageRequest.of(0, 10))
-        return s
+        return findList
     }
 
     override fun addDanMu(catDanMu: CatDanMu){

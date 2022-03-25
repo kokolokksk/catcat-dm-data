@@ -3,6 +3,7 @@ package monster.loli.catcatdmdata.controller
 import monster.loli.catcatdmdata.entity.CatDanMu
 import monster.loli.catcatdmdata.service.CatDanMuService
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.data.domain.Page
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
@@ -14,9 +15,8 @@ class CatDanMuController {
     lateinit var danMuService: CatDanMuService;
 
     @RequestMapping("listDanMu")
-    fun listDanMu(clientId: String,roomId: Long): String {
-        danMuService.listDanMu("1",1)
-        return ""
+    fun listDanMu(clientId: String,roomId: Long): Page<CatDanMu?>? {
+        return danMuService.listDanMu("1",1)
     }
     @RequestMapping("addDanMu")
     fun addDanMu(@RequestBody catDanMu: CatDanMu): String {
