@@ -1,0 +1,1 @@
+nohup java -Xmx128m -Xms128m -jar catcat-dm-data-0.0.1-SNAPSHOT.jar > lolidate.log 2>&1 &

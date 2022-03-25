@@ -1,0 +1,12 @@
+server:
+  servlet:
+    context-path: /
+  port: 8088
+spring:
+  data:
+    mongodb:
+      uri: mongodb://db.loli.monster:27017/cat
+env:
+    config:
+      file_path: f://catcatdm//
+      file_list: file.list
