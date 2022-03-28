@@ -10,3 +10,4 @@ env:
     config:
       file_path: f://catcatdm//
       file_list: file.list
+      client_length: 8
