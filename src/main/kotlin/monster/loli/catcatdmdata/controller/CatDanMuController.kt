@@ -26,6 +26,7 @@ class CatDanMuController {
     fun addDanMu(@RequestBody catDanMu: CatDanMu,clientId: String,roomId: Long): String {
         //TODO 检查有效性
         if(CatCatUtils.checkClientId(clientId)){
+            catDanMu.clientId = clientId
             danMuService.addDanMu(catDanMu)
         }
 
