@@ -16,9 +16,9 @@ class CatDanMuController {
     lateinit var danMuService: CatDanMuService;
 
     @RequestMapping("listDanMu")
-    fun listDanMu(clientId: String,roomId: Long): Page<CatDanMu?>? {
+    fun listDanMu(clientId: String,roomId: Long,page: Long,size: Long): Page<CatDanMu?>? {
         if(CatCatUtils.checkClientId(clientId)){
-            return   danMuService.listDanMu("1",1)
+            return   danMuService.listDanMu(clientId,roomId,page,size)
         }
         return null
     }
