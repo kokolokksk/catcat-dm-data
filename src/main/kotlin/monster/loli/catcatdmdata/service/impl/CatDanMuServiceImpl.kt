@@ -9,12 +9,7 @@ import org.springframework.data.domain.ExampleMatcher
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.mongodb.core.MongoTemplate
-import org.springframework.data.mongodb.core.query.Criteria
-import org.springframework.data.mongodb.core.query.Query
-import org.springframework.data.support.ExampleMatcherAccessor
 import org.springframework.stereotype.Service
-import kotlin.collections.ArrayList
-import kotlin.collections.LinkedHashMap
 
 @Service
 class CatDanMuServiceImpl: CatDanMuService {
@@ -22,13 +17,17 @@ class CatDanMuServiceImpl: CatDanMuService {
     lateinit var catDanMuRepository: CatDanMuRepository
     @Autowired
     lateinit var mongoTemplate: MongoTemplate
-    override fun listDanMu(clientId: String, roomId: Long, page: Long, size: Long): Page<CatDanMu?>? {
+    override fun listDanMu(clientId: String, roomId: Long?, page: Long, size: Long): Page<CatDanMu?>? {
         val catDanMu = CatDanMu()
         catDanMu.clientId = clientId
-        catDanMu.roomId = roomId
+        if (roomId != null) {
+            catDanMu.roomId = roomId
+        }
        val query:ExampleMatcher = ExampleMatcher.matching()
+           .withIgnorePaths("userid","uuid","nickname","avatar","live_level","xz_level","xz_name","danmu","time","use_state","type","sessionId")
            .withIgnoreCase(true)
-           .withMatcher("sender", ExampleMatcher.GenericPropertyMatchers.contains());
+           .withMatcher("sender", ExampleMatcher.GenericPropertyMatchers.contains())
+           .withIgnoreNullValues();
         val example:Example<CatDanMu> = Example.of(catDanMu,query)
         return catDanMuRepository.findAll(example, PageRequest.of(page.toInt(), size.toInt())
         )

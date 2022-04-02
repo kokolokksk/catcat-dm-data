@@ -19,6 +19,6 @@ data class CatDanMu(
     var use_state:Long = 0,
     var type:Int = 1,
     var clientId:String = "",
-    var roomId:Long = 0,
+    var roomId:Long? = null,
     var sessionId:String = ""
 )

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.domain.Page
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
@@ -16,7 +17,7 @@ class CatDanMuController {
     lateinit var danMuService: CatDanMuService;
 
     @RequestMapping("listDanMu")
-    fun listDanMu(clientId: String,roomId: Long,page: Long,size: Long): Page<CatDanMu?>? {
+    fun listDanMu(clientId: String,@RequestParam(required = false) roomId: Long?,page: Long,size: Long): Page<CatDanMu?>? {
         if(CatCatUtils.checkClientId(clientId)){
             return   danMuService.listDanMu(clientId,roomId,page,size)
         }
