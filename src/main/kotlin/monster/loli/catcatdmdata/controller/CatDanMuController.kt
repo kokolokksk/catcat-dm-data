@@ -3,6 +3,8 @@ package monster.loli.catcatdmdata.controller
 import monster.loli.catcatdmdata.entity.CatDanMu
 import monster.loli.catcatdmdata.service.CatDanMuService
 import monster.loli.catcatdmdata.utils.CatCatUtils
+import monster.loli.catcatdmdata.vo.CatDanMuQuery
+import monster.loli.catcatdmdata.vo.CatPage
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.domain.Page
 import org.springframework.web.bind.annotation.RequestBody
@@ -32,5 +34,9 @@ class CatDanMuController {
         }
 
         return "added"
+    }
+    @RequestMapping("mapDanMu")
+    fun mapDanMu(@RequestBody catDanMuQuery: CatDanMuQuery): CatPage<List<CatDanMu?>?> {
+        return danMuService.mapDanMu(catDanMuQuery)
     }
 }
