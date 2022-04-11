@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
+import java.util.Calendar
+import java.util.Date
 
 @RestController
 @RequestMapping("dm")
@@ -36,7 +38,30 @@ class CatDanMuController {
         return "added"
     }
     @RequestMapping("mapDanMu")
-    fun mapDanMu(@RequestBody catDanMuQuery: CatDanMuQuery): CatPage<List<CatDanMu?>?> {
+    fun mapDanMu(@RequestBody catDanMuQuery: CatDanMuQuery): CatPage<List<CatDanMu?>?>? {
+        if(catDanMuQuery.clientId==null) return null
+        catDanMuQuery.clientId?.let { if(!CatCatUtils.checkClientId(it)) return null }
         return danMuService.mapDanMu(catDanMuQuery)
+    }
+    @RequestMapping("statisticalDanMu")
+    fun statisticalDanMu(clientId: String,startTime: Long?,endTime: Long?,abscissa: String?): Map<String,Long>? {
+        if(!CatCatUtils.checkClientId(clientId)) return null
+        val cal = Calendar.getInstance()
+        var ts: Long = 0
+        var te: Long = 0
+        if(endTime!=null){
+            te = endTime
+        }else{
+            cal.set(cal[Calendar.YEAR],cal[Calendar.MONTH],cal[Calendar.DATE],23,59,59)
+            te = cal.time.time / 1000
+        }
+        if(startTime!=null){
+            ts = startTime
+        }else{
+            cal.set(cal[Calendar.YEAR],cal[Calendar.MONTH],1,0,0,0)
+            ts = cal.time.time / 1000
+        }
+        val x: String = if(abscissa!=null) abscissa else "date"
+        return danMuService.statisticalDanMu(ts,te,x,clientId)
     }
 }

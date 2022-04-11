@@ -9,4 +9,5 @@ interface CatDanMuService {
     fun listDanMu(clientId: String,roomId: Long?,page: Long,size: Long): Page<CatDanMu?>?
     fun addDanMu(catDanMu: CatDanMu)
     fun mapDanMu(catDanMuQuery: CatDanMuQuery): CatPage<List<CatDanMu?>?>
+    fun statisticalDanMu(ts: Long,te: Long,x: String,clientId: String): Map<String,Long>?
 }
