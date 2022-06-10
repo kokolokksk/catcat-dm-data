@@ -1,17 +1,27 @@
 package monster.loli.catcatdmdata.controller
 
+import com.google.gson.Gson
 import jakarta.servlet.http.HttpServletRequest
+import monster.loli.catcatdmdata.entity.BiliBiliUserInfo
 import monster.loli.catcatdmdata.entity.CatClient
 import monster.loli.catcatdmdata.service.CatClientService
 import monster.loli.catcatdmdata.utils.CatCatUtils
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import okhttp3.Response
+import okio.IOException
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
+import java.util.Collections
 
 @RestController
 @RequestMapping("client")
 class ClientController {
+    val logger:Logger = LoggerFactory.getLogger(this::class.java)
     @Autowired
     lateinit var catClientService: CatClientService
     @Value("\${env.config.client_length}")
@@ -30,4 +40,26 @@ class ClientController {
         catClientService.addClientId(cc)
         return cc.clientId
     }
+    @RequestMapping("getUserInfo")
+    fun getUserInfo(uid:String): Map<String,Any> {
+        val client: OkHttpClient = OkHttpClient();
+
+        val url = "https://api.live.bilibili.com/live_user/v1/Master/info?uid=$uid"
+        val request : Request =  Request.Builder()
+            .url(url)
+            .build();
+        var r : LinkedHashMap<String,Any> = LinkedHashMap()
+        try{
+            val response: Response = client . newCall (request).execute()
+           // logger.info(response.body?.string() ?: "");
+            val g:Gson = Gson()
+            val data : BiliBiliUserInfo = g.fromJson(response.body?.string(),BiliBiliUserInfo::class.java)
+            data.data?.info?.face?.let { r.put("face", it) }
+        }catch (e:Exception){
+            e.printStackTrace()
+        }
+
+
+        return r
+  }
 }
