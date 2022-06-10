@@ -47,6 +47,7 @@ class ClientController {
         val url = "https://api.live.bilibili.com/live_user/v1/Master/info?uid=$uid"
         val request : Request =  Request.Builder()
             .url(url)
+            .addHeader("referer","https://www.bilibili.com/")
             .build();
         var r : LinkedHashMap<String,Any> = LinkedHashMap()
         try{
