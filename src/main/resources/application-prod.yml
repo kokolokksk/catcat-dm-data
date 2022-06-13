@@ -6,6 +6,12 @@ spring:
   data:
     mongodb:
       uri: mongodb://db.loli.monster:27017/cat
+  resources:
+    mvc:
+      static-path-pattern: /static/upload/**
+  web:
+    resources:
+      static-locations: classpath:static/upload/,file:static/upload/
 env:
     config:
       file_path: /home/lighthouse/lolidate/catcatdm/

@@ -42,25 +42,8 @@ class ClientController {
     }
     @RequestMapping("getUserInfo")
     fun getUserInfo(uid:String): Map<String,Any> {
-        val client: OkHttpClient = OkHttpClient();
-
-        val url = "https://api.live.bilibili.com/live_user/v1/Master/info?uid=$uid"
-        val request : Request =  Request.Builder()
-            .url(url)
-            .addHeader("referer","https://www.bilibili.com/")
-            .build();
         var r : LinkedHashMap<String,Any> = LinkedHashMap()
-        try{
-            val response: Response = client . newCall (request).execute()
-           // logger.info(response.body?.string() ?: "");
-            val g:Gson = Gson()
-            val data : BiliBiliUserInfo = g.fromJson(response.body?.string(),BiliBiliUserInfo::class.java)
-            data.data?.info?.face?.let { r.put("face", it) }
-        }catch (e:Exception){
-            e.printStackTrace()
-        }
-
-
+        r = catClientService.getUserInfo(uid)
         return r
   }
 }
