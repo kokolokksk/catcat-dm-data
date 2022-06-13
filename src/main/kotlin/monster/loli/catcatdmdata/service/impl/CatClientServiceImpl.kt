@@ -46,7 +46,7 @@ class CatClientServiceImpl: CatClientService {
             bilibiliUser.uname = data.data?.info?.uname?:"";
             mongoTemplate.insert(bilibiliUser)
             val path = CatCatUtils.downFile(bilibiliUser.face);
-            faceMap.put("face",bilibiliUser.face)
+            faceMap.put("face",bilibiliUser.face.split("/").last())
             
         } else {
             val dir = File(System.getProperty("user.dir")+"/static/upload/")
@@ -54,7 +54,7 @@ class CatClientServiceImpl: CatClientService {
             if(!file.exists()){
                 CatCatUtils.downFile(l[0].face);
             }
-            faceMap.put("face",l[0].face)
+            faceMap.put("face",l[0].face.split("/").last())
         }
         return  faceMap
     }
