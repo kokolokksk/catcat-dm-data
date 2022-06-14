@@ -34,6 +34,7 @@ class ClientController {
         try{
             cc.ip = request.getHeader("x-forwarded-for")
             cc.userAgent = request.getHeader("user-agent")
+            cc.version = request.getHeader("version")
         }catch (e:Exception){
             // e.printStackTrace()
         }

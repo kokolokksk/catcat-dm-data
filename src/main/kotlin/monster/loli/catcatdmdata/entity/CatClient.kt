@@ -5,5 +5,6 @@ data class CatClient(
     var clientId:String = "",
     var ts:Long = 0,
     var ip:String = "",
-    var userAgent:String = ""
+    var userAgent:String = "",
+    var version:String = ""
 )
