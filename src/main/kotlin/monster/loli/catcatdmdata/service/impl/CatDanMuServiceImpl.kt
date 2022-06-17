@@ -32,7 +32,7 @@ class CatDanMuServiceImpl: CatDanMuService {
             catDanMu.roomId = roomId
         }
        val query:ExampleMatcher = ExampleMatcher.matching()
-           .withIgnorePaths("userid","uuid","nickname","avatar","live_level","xz_level","xz_name","danmu","time","use_state","type","sessionId")
+           .withIgnorePaths("uid","uuid","nickname","avatarFace","content","timestamp","type","sessionId")
            .withIgnoreCase(true)
            .withMatcher("sender", ExampleMatcher.GenericPropertyMatchers.contains())
            .withIgnoreNullValues();
@@ -42,6 +42,7 @@ class CatDanMuServiceImpl: CatDanMuService {
     }
 
     override fun addDanMu(catDanMu: CatDanMu){
+        catDanMu.uuid = UUID.randomUUID().toString()
          mongoTemplate.insert(catDanMu)
     }
 
@@ -52,8 +53,8 @@ class CatDanMuServiceImpl: CatDanMuService {
             it.roomId?.let { roomId -> criteria.and("roomId").`is`(roomId) }
             it.clientId?.let { clientId -> criteria.and("clientId").`is`(clientId) }
             if(it.startTime==null||it.endTime==null){
-                if(it.startTime!=null) criteria.and("time").gt(it.startTime!!)
-                if(it.endTime!=null) criteria.and("time").lte(it.endTime!!)
+                if(it.startTime!=null) criteria.and("timestamp").gt(it.startTime!!)
+                if(it.endTime!=null) criteria.and("timestamp").lte(it.endTime!!)
             }else criteria.and("time").gt(it.startTime!!).lte(it.endTime!!)
         }
         query.addCriteria(criteria)
