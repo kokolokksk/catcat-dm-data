@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*
 class WebLoginController {
     @Autowired
     lateinit var webLoginService: WebLoginService
-    @PostMapping("login")
+    @RequestMapping("login")
     fun loginWeb(@RequestBody clientId:String ): LinkedHashMap<String, Any> {
         var dataMap = LinkedHashMap<String,Any>()
         var rs = webLoginService.loginWeb(clientId);
