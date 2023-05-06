@@ -5,7 +5,7 @@ server:
 spring:
   data:
     mongodb:
-      uri: mongodb://db.loli.monster:27017/cat
+      uri: mongodb://localhost:27017/cat
 env:
     config:
       file_path: f://catcatdm//
